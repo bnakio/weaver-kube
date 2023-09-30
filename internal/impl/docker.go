@@ -46,6 +46,11 @@ COPY . .
 {{if . }}
 COPY --from=builder /go/bin/ /weaver/
 {{end}}
+RUN set -e; \
+  export DEBIAN_FRONTEND=noninteractive; \
+  apt-get update; \
+  apt-get install -y --no-install-recommends ca-certificates
+RUN update-ca-certificates
 ENTRYPOINT ["/weaver/weaver-kube"]
 `))
 
